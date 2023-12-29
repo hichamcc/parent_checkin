@@ -1,0 +1,39 @@
+
+<div class="form-container">
+  <ul class="circles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+  <div class="">
+
+
+    <div class="registration-card animate__animated animate__fadeInDown" *ngIf="schoolName"  >
+      <h1 class="my-4 text-center"><b>{{schoolName}}</b></h1>
+      <div class="col-md-8 offset-md-2 col-sm-12 mb-4" *ngIf="!nameSent">
+        <div class="form-group p-4 text-center">
+          <label for="name" dir="rtl" >المرجوا  ادخال اسم الطالب :</label>
+          <div class="input-group ">
+            <input type="text" class="form-control-lg" id="name"   [(ngModel)]="studentName"  required="">
+          </div>
+        </div>
+        <button type="submit" class="button-75 mt-4 mb-4" role="button" (click)="addStudent()"><span class="text" >ارسال</span></button>
+      </div>
+
+      <div class="col-md-8 offset-md-2 col-sm-12 mb-4 text-center " *ngIf="nameSent" >
+          <h2>تمت المنادات على الطالب</h2>
+           <i class="bi bi-check-circle"></i>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

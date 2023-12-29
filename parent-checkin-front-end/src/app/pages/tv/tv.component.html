@@ -1,0 +1,38 @@
+<div class="tv-container">
+  <div class="container">
+    <ul class="circles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+
+  <div  class="call" *ngIf="call">
+    <span class="bounce">{{currentStudent}}</span>
+  </div>
+  <div class="row student-container" *ngIf="!call">
+    <div class="col-md-6 offset-3" >
+      <div class="p-2 student">
+        <h1>
+          {{ schoolName }}
+        </h1>
+      </div>
+    </div>
+
+
+    <div class="col-md-4"  *ngFor="let student of students">
+      <div class="p-1 student">
+        <h1>
+          {{ student }}
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>

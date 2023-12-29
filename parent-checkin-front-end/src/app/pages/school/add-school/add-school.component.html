@@ -1,0 +1,11 @@
+<div class="p-5">
+  <h2>Add New School</h2>
+  <form (ngSubmit)="addNewSchool()">
+    <div class="mb-3">
+      <label for="newSchoolName" class="form-label">School Name:</label>
+      <input type="text" class="form-control" id="newSchoolName" [(ngModel)]="newSchoolName" name="name" required>
+    </div>
+    <button type="submit" class="btn btn-primary m-2" >Add School</button>
+    <button type="button" class="btn btn-secondary m-2" mat-dialog-close>Cancel</button>
+  </form>
+</div>

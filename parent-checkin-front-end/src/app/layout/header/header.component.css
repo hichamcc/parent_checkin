@@ -1,0 +1,7 @@
+.show-sidebar{
+  left : 0px !important;
+}
+
+.hide-sidebar{
+  left : -300px !important;
+}

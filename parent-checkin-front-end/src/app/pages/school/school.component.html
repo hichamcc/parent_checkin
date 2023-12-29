@@ -1,0 +1,73 @@
+
+<div class="pagetitle">
+  <h1>Shcools List</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active">Shcools List</li>
+    </ol>
+  </nav>
+</div>
+<!-- End Page Title -->
+
+<section class="section">
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+
+      <div class="card">
+        <div class="card-body" >
+
+          <div class="form-group col-4 m-2 d-none">
+            <textarea class="form-control" [(ngModel)]="textToSpeak" id="text" placeholder="Enter text to speak"></textarea>
+            <button class="btn btn-primary mt-2" (click)="speak()">Speak</button>
+
+          </div>
+
+          <button class="btn btn-primary m-2"  (click)="openAddSchoolModal()">Add New School</button>
+
+
+          <!-- school.component.html -->
+          <table mat-table [dataSource]="dataSource" >
+            <!-- School Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>School Name</th>
+              <td mat-cell *matCellDef="let school">{{ school.name }}</td>
+            </ng-container>
+
+            <!-- QR Code Column -->
+            <ng-container matColumnDef="qrCode">
+              <th mat-header-cell *matHeaderCellDef>QR Code</th>
+              <td mat-cell *matCellDef="let school">
+                <a [href]="school.qrCodeUrl" download="{{school.name}}-qrcode.png">
+                  <img [src]="school.qrCodeUrl" alt="QR Code"  />
+                </a>
+              </td>
+            </ng-container>
+
+            <!-- TV Link Column -->
+            <ng-container matColumnDef="tvLink">
+              <th mat-header-cell *matHeaderCellDef>TV Link</th>
+              <td mat-cell *matCellDef="let school"><a href="/tv/{{ school.id }}" target="_blank" >TV - {{ school.name }}</a> </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let school">
+                <button class="btn btn-danger btn-sm" (click)="deleteSchool(school.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
