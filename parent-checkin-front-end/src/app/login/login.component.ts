@@ -41,9 +41,15 @@ export class LoginComponent implements OnInit{
       const credentials = this.loginForm.value;
       this.authService.login(credentials).subscribe(
         (response) => {
-          console.log('Login successful', response);
-          window.localStorage.setItem('authToken','logged')
-          this.router.navigate(['/']);
+          if(response){
+            console.log('Login successful', response);
+            window.localStorage.setItem('authToken','logged')
+            this.router.navigate(['/']);
+          }else {
+            console.error('Login failed', response);
+            this.loginFailed = "Login failed!";
+          }
+
 
         },
         (error) => {

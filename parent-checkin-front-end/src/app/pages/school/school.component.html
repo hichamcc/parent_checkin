@@ -39,7 +39,7 @@
               <th mat-header-cell *matHeaderCellDef>QR Code</th>
               <td mat-cell *matCellDef="let school">
                 <a [href]="school.qrCodeUrl" download="{{school.name}}-qrcode.png">
-                  <img [src]="school.qrCodeUrl" alt="QR Code"  />
+                  <img [src]="school.qrCodeUrl" alt="QR Code" style="width: 200px ; height: 200px"  />
                 </a>
               </td>
             </ng-container>

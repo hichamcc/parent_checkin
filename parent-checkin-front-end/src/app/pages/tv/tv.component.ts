@@ -1,4 +1,4 @@
-import {Component,  OnDestroy, OnInit} from '@angular/core';
+import {Component,  OnDestroy, OnInit,AfterViewInit, ElementRef, ViewChild} from '@angular/core';
 import {SocketService} from "../../_services/socket.service";
 import { CommonModule } from '@angular/common';
 import {StudentService} from "../../_services/student.service";
@@ -15,7 +15,7 @@ import * as transliteration from 'transliteration';
   templateUrl: './tv.component.html',
   styleUrl: './tv.component.css'
 })
-export class TvComponent implements OnInit , OnDestroy{
+export class TvComponent implements OnInit , OnDestroy , AfterViewInit{
   students: any[] = [];
   private alive: boolean = true;
   call: boolean = false;
@@ -23,17 +23,21 @@ export class TvComponent implements OnInit , OnDestroy{
   schoolId: number = 0;
   englishName: string = "";
   schoolName: string = "";
+  start: boolean = false;
 
   private speechQueue: string[] = [];
   private nameQueue: string[] = [];
   private isSpeaking: boolean = false;
+  @ViewChild('startButton') startButton!: ElementRef;
 
   constructor(private socketService: SocketService, private schoolService: SchoolService, private studentService: StudentService ,   private route: ActivatedRoute) {
 
   }
 
 
-
+  startTv(){
+    this.start = true;
+  }
   toggleCall() {
     this.call = true;
     this.isSpeaking = true;
@@ -51,9 +55,9 @@ export class TvComponent implements OnInit , OnDestroy{
       this.schoolId = params['id'];
     });
     this.getSchoolDetails(this.schoolId);
-
-
     this.getRecentStudents();
+
+
 
     // Listen for newStudent events from the server
     this.socketService.listen('newStudent').subscribe((newStudent) => {
@@ -72,6 +76,12 @@ export class TvComponent implements OnInit , OnDestroy{
         this.getRecentStudents();
       });
 
+  }
+
+  ngAfterViewInit(): void {
+    if (this.startButton && this.startButton.nativeElement) {
+      this.startButton.nativeElement.focus();
+    }
   }
 
   getSchoolDetails(schoolId: number) {

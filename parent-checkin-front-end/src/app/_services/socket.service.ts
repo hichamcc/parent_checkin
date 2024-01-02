@@ -9,7 +9,7 @@ export class SocketService {
   private socket: Socket;
 
   constructor() {
-    this.socket = io('http://192.168.100.44:3000'); // Replace with your server URL
+    this.socket = io('http://localhost:3000'); // Replace with your server URL
   }
 
   public listen(event: string): Observable<any> {

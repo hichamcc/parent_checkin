@@ -14,10 +14,13 @@
     </ul>
   </div>
 
-  <div  class="call" *ngIf="call">
+  <div class="start" *ngIf="!start">
+        <button #startButton class="btn btn-warning " (click)="startTv()">Start</button>
+  </div>
+  <div  class="call" *ngIf="call && start">
     <span class="bounce">{{currentStudent}}</span>
   </div>
-  <div class="row student-container" *ngIf="!call">
+  <div class="row student-container" *ngIf="!call && start">
     <div class="col-md-6 offset-3" >
       <div class="p-2 student">
         <h1>

@@ -11,7 +11,8 @@ const socketIo = require('socket.io');
 const http = require('http');
 const server = http.createServer(app);
 
-
+//user id  : JvbqevSVgSeIjOrpjbhEKjUmD4y2
+//key :  a1cf304d39624408b3cced6e7487aa91
 const port = 3000;
 
 
@@ -28,7 +29,7 @@ app.get("/", (req, res) => {
 
 
 
-server.listen(port,"192.168.100.44", () => {
+server.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 

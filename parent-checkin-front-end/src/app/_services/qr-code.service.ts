@@ -9,7 +9,7 @@ export class QrCodeService {
   constructor() { }
 
   generateQrCode(data: string): Promise<string> {
-    const options = { width: 200, height: 200 };
+    const options = { width: 500, height: 500 };
 
     return QRCode.toDataURL(data , options);
   }
