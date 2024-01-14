@@ -63,7 +63,7 @@ export class TvComponent implements OnInit , OnDestroy , AfterViewInit{
     this.socketService.listen('newStudent').subscribe((newStudent) => {
       if(parseInt(newStudent[1])  == this.schoolId ){
         this.students.unshift(newStudent[0]);
-        this.englishName = transliteration.slugify(newStudent[0]);
+        this.englishName = newStudent[0];
         this.studentSpeech(this.englishName ,newStudent[0] );
       }
     });
@@ -116,9 +116,14 @@ export class TvComponent implements OnInit , OnDestroy , AfterViewInit{
 
     const nextName = this.speechQueue.shift();
     const utterance = new SpeechSynthesisUtterance(nextName);
-    utterance.lang = "FR";
+    if (typeof nextName === "string") {
 
-
+      if (/[a-zA-Z]/.test(nextName)) {
+      utterance.lang = "FR"; // Set language to French
+    } else {
+      utterance.lang = "ar-SA"; // Set language to Arabic
+    }
+    }
     // Set a flag to indicate that speech is ongoing
     this.isSpeaking = true;
 
@@ -128,12 +133,15 @@ export class TvComponent implements OnInit , OnDestroy , AfterViewInit{
 
     // Start speaking
     window.speechSynthesis.speak(utterance);
+
+    window.speechSynthesis.speak(utterance);
+    window.speechSynthesis.speak(utterance);
     window.speechSynthesis.speak(utterance);
 
 
     setTimeout(() => {
       this.speakNextInQueue();
-    }, 4000);
+    }, 6000);
 
 
     // Listen for the end of speech
