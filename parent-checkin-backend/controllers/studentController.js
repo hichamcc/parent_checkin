@@ -5,8 +5,6 @@ exports.getRecentStudents = (req, res) => {
     const twoMinutesAgo = new Date();
     twoMinutesAgo.setMinutes(twoMinutesAgo.getMinutes() - 2);
     const schoolId = req.params.id;
-
-
     const query = 'SELECT * FROM students WHERE created_at >= ? and school_id = ? order by id desc';
     db.query(query, [twoMinutesAgo , schoolId], (err, results) => {
         if (err) {
@@ -22,6 +20,12 @@ exports.getRecentStudents = (req, res) => {
 exports.createStudent = (req, res) => {
     const { name , schoolId } = req.body;
     const query = 'INSERT INTO students (name , school_id) VALUES (? , ?)';
+    const queryDeleteOld = 'DELETE FROM students WHERE created_at < ?';
+
+    // Get the current timestamp for 1 day ago
+    const oneDayAgo = new Date();
+    oneDayAgo.setDate(oneDayAgo.getDate() - 1);
+
     db.query(query, [name , schoolId], (err, result) => {
         if (err) {
             console.error('Error creating student:', err);
@@ -29,6 +33,14 @@ exports.createStudent = (req, res) => {
         } else {
             const newStudent = { id: result.insertId, name };
             res.status(201).json(newStudent);
+            // Delete students older than 1 day
+            db.query(queryDeleteOld, [oneDayAgo], (deleteErr, deleteResult) => {
+                if (deleteErr) {
+                    console.error('Error deleting old students:', deleteErr);
+                } else {
+                    console.log('Deleted old students:', deleteResult.affectedRows);
+                }
+            });
         }
     });
 };

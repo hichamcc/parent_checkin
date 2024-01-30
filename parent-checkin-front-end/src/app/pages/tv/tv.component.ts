@@ -63,7 +63,8 @@ export class TvComponent implements OnInit , OnDestroy , AfterViewInit{
     this.socketService.listen('newStudent').subscribe((newStudent) => {
       if(parseInt(newStudent[1])  == this.schoolId ){
         this.students.unshift(newStudent[0]);
-        this.englishName = newStudent[0];
+        this.englishName = newStudent[2];
+        console.log(this.englishName);
         this.studentSpeech(this.englishName ,newStudent[0] );
       }
     });
@@ -115,15 +116,8 @@ export class TvComponent implements OnInit , OnDestroy , AfterViewInit{
     }
 
     const nextName = this.speechQueue.shift();
-    const utterance = new SpeechSynthesisUtterance(nextName);
-    if (typeof nextName === "string") {
+    const utterance = nextName;
 
-      if (/[a-zA-Z]/.test(nextName)) {
-      utterance.lang = "FR"; // Set language to French
-    } else {
-      utterance.lang = "ar-SA"; // Set language to Arabic
-    }
-    }
     // Set a flag to indicate that speech is ongoing
     this.isSpeaking = true;
 
@@ -131,23 +125,45 @@ export class TvComponent implements OnInit , OnDestroy , AfterViewInit{
     this.call = true;
 
 
-    // Start speaking
-    window.speechSynthesis.speak(utterance);
+    // Specify the MP3 URL
+    const mp3Url = 'http://localhost:3000/'+utterance;
 
-    window.speechSynthesis.speak(utterance);
-    window.speechSynthesis.speak(utterance);
-    window.speechSynthesis.speak(utterance);
+    // Create an Audio object
+    const audio = new Audio(mp3Url);
+    const playCount = 4;
 
+    let count = playCount;
+
+      audio.play();
+
+    setTimeout(() => {
+      audio.play();
+    }, 3000);
+    setTimeout(() => {
+      audio.play();
+    }, 6000);
+    setTimeout(() => {
+      audio.play();
+    }, 9000);
+
+    // while (count > 0) {
+    //   audio.play()
+    //     .then(() => {
+    //       // Decrease the count and play again when it finishes
+    //       count--;
+    //       if (count > 0) {
+    //         audio.currentTime = 0; // Reset the audio to the beginning
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.error('Error playing audio:', error);
+    //     });
+    // }
 
     setTimeout(() => {
       this.speakNextInQueue();
-    }, 6000);
+    }, 12000);
 
-
-    // Listen for the end of speech
-    utterance.onend = () => {
-      // Continue with the next item in the queue
-    };
   }
 
   ngOnDestroy() {
